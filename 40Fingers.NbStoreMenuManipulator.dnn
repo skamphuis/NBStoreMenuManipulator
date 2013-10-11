@@ -1,0 +1,50 @@
+﻿<dotnetnuke type="Package" version="5.0">
+  <packages><package name="40Fingers.NbStoreMenuManipulator" type="Library" version="00.00.00">
+  <friendlyName>40Fingers NbStoreMenuManipulator</friendlyName>
+  <description>
+	<![CDATA[
+	<b>40FINGERS HttpModule: NbStoreMenuManipulator</b>
+  <p>To install, edit web.config section configuration/system.web/httpModules to contain the following line BEFORE UrlRewrite:<br />
+  &lt;add name="NbStoreMenuManipulator" type="FortyFingers.NbStoreMenuManipulator.NbStoreMenuManipulatorModule, 40Fingers.DNN.Modules.NbStoreMenuManipulator" /&gt;
+  </p>
+	<ul>
+		<li>Rewrites a URL before DNN's UrlRewriter kick in. Parameters after the question mark, will be put in front of it, the way DNN expects.<<br/>
+    This allows for URL's like http://www.domain.com/Category/Product.aspx?tabid=123
+		</li>
+		<li>
+		And much more...
+		</li>
+	</ul>
+  ]]>
+  </description>
+  <owner>
+	<name>40Fingers</name>
+	<organization>40Fingers</organization>
+	<url>http://www.40fingers.net</url>
+	<email>info@40fingers.net</email>
+  </owner>
+	<dependencies>
+		<dependency type="CoreVersion">05.02.03</dependency>
+	</dependencies>
+  <license src="License.htm" />
+  <releaseNotes src="releaseNotes.htm" />
+  <components>
+    <component type="Assembly">
+      <assemblies>
+        <basePath>bin</basePath>
+        <assembly>
+          <name>40Fingers.DNN.Modules.NbStoreMenuManipulator.dll</name>
+        </assembly>
+      </assemblies>
+    </component>
+    <component type="ResourceFile">
+      <resourceFiles>
+        <basePath>DesktopModules/40Fingers/NbStoreMenuManipulator</basePath>
+        <resourceFile>
+          <name>Resources.zip</name>
+        </resourceFile>
+      </resourceFiles>
+    </component>
+  </components>
+</package></packages>
+</dotnetnuke>
