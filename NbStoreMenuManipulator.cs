@@ -30,7 +30,12 @@ namespace FortyFingers.NbStoreMenuManipulator
 
             // see if we need to merge into the current pages, by searching for marker page [cat]
             int idx = 0;
-            MenuNode catNod = FindByText(nodes, "[webshop]");
+            int menuTabId = Null.NullInteger;
+            menuTabId = SharedFunctions.GetStoreSettingInt(_portalSettings.PortalId, "FortyFingers.CategoriesTab",
+                                                           SharedFunctions.GetCurrentCulture());
+
+            
+            MenuNode catNod = FindByTabId(nodes, menuTabId);
 
             if (catNod != null)
             {
@@ -42,8 +47,11 @@ namespace FortyFingers.NbStoreMenuManipulator
                 MenuNode parentNode = null;
 
                 // find the collection of MenuNodes where catNod is in
-                if (catNod.Parent == null)
+                if (catNod.Depth == 0)
+                {
+                    parentNode = catNod.Parent;
                     chgNodes = nodes; // take the toplevel nodes
+                }
                 else
                 {
                     parentNode = FindByTabId(nodes, catNod.Parent.TabId); // get a reference to the parent too
@@ -80,7 +88,7 @@ namespace FortyFingers.NbStoreMenuManipulator
                     _catIDsToRedirectToTab = new Dictionary<int, int>();
 
                     var setting = SharedFunctions.GetStoreSetting(_portalSettings.PortalId,
-                                                                  "manipulatorcatidontabid.text");
+                                                                  "manipulatorcatidontabid.text", SharedFunctions.GetCurrentCulture());
                     // formaat: catid1>tabid1;catid2>tabid2
                     foreach (var pair in setting.Split(';'))
                     {
@@ -232,90 +240,5 @@ namespace FortyFingers.NbStoreMenuManipulator
         {
             get { return System.Threading.Thread.CurrentThread.CurrentCulture; }
         }
-
-
-        //private List<MenuNode> GetCatNodeXml(string currentTabId, string parentItemId = "0", bool recursive = true, int depth = 0, MenuNode pnode = null)
-        //{
-
-        //    var objCtrl = new NBrightGenController();
-        //    var strFilter = " and (ParentItemId = " + parentItemId + " and typecode = 'CATEGORY') ";
-        //    var strOrderBy = " order by [XMLData].value('(genxml/hidden/recordsortorder)[1]','nvarchar(10)'),[XMLData].value('(genxml/lang/genxml/textbox/txtname)[1]','nvarchar(50)') ";
-        //    var nodes = new List<MenuNode>();
-        //    var objS = objCtrl.GetInfoByGuidKey(PortalSettings.Current.PortalId, -1, "SETTINGS", "NBrightIndexSettings");
-        //    var imgFolder = objS.GetXmlProperty("genxml/textbox/txtuploadfolder");
-        //    var defimgsize = objS.GetXmlProperty("genxml/dropdownlist/ddlsmallimgsize");
-
-        //    var l = objCtrl.GetListWithLang(PortalSettings.Current.PortalId, -1, "CATEGORY", strFilter, strOrderBy, 0, 0, 0, 0, "CATEGORYLANG", "");
-
-        //    //var tmpNbSettings = new Dictionary<Int32,NBrightDNN.NBrightInfo>();
-
-        //    var lp = 0;
-        //    foreach (var obj in l)
-        //    {
-        //        if (obj.GetXmlProperty("genxml/checkbox/chkhide").ToLower() != "true")
-        //        {
-
-        //            var n = new MenuNode();
-
-        //            n.Parent = pnode;
-
-        //            n.TabId = obj.ItemID;
-        //            n.Text = obj.GetXmlProperty("genxml/lang/genxml/textbox/txtname");
-        //            n.Title = obj.GetXmlProperty("genxml/lang/genxml/textbox/txtsummary");
-
-        //            var objLang = objCtrl.GetInfoLang(PortalSettings.Current.PortalId, obj.ModuleId,
-        //                                              obj.ItemID.ToString(""),
-        //                                              NBrightCore.common.Utils.GetCurrentCulture(), "CATEGORYLANG");
-        //            var tabid = obj.GetXmlProperty("genxml/dropdownlist/cattabid");
-        //            if (tabid == "")
-        //            {
-        //                tabid = objS.GetXmlProperty("genxml/dropdownlist/ddltabdefault");
-        //            }
-        //            if (tabid == "") tabid = currentTabId;
-
-        //            n.Url = Components.CategoryUtils.GetCategoryUrl(obj, tabid);
-
-        //            n.Enabled = true;
-        //            if (obj.GetXmlProperty("genxml/checkbox/chkdisabled").ToLower() == "true") n.Enabled = false;
-        //            n.Selected = false;
-        //            if ((_catid == obj.ItemID.ToString("")) | (_catguidkey == obj.GUIDKey)) n.Selected = true;
-        //            n.Breadcrumb = false;
-        //            if ((_catid == obj.ItemID.ToString("")) | (_catguidkey == obj.GUIDKey)) n.Breadcrumb = true;
-        //            n.Separator = false;
-        //            n.LargeImage = "";
-        //            n.Icon = "";
-        //            var img = obj.GetXmlProperty("genxml/lang/genxml/hidden/hidfup1");
-        //            if (img != "")
-        //            {
-        //                n.LargeImage = imgFolder + "\\" + img;
-        //                n.Icon = imgFolder + "\\Thumb_50x0" + img;
-        //                if (defimgsize != "") n.Icon = imgFolder + "\\Thumb_" + defimgsize + img;
-        //                var imgsize = obj.GetXmlProperty("genxml/dropdownlist/ddlsmallimgsize");
-        //                if (imgsize != "") n.Icon = imgFolder + "\\Thumb_" + imgsize + img;
-        //            }
-        //            n.Keywords = obj.GetXmlProperty("genxml/lang/genxml/textbox/txtseokeywords");
-        //            n.Description = obj.GetXmlProperty("genxml/lang/genxml/textbox/txtseodescription");
-        //            n.CommandName = "";
-        //            //n.CommandArgument = string.Format("entrycount={0}|moduleid={1}", obj.GetXmlProperty("genxml/hidden/entrycount"), obj.ModuleId.ToString(""));
-
-        //            if (recursive && depth < 50) //stop infinate loop, only allow 50 sub levels
-        //            {
-        //                depth += 1;
-        //                var childrenNodes = GetCatNodeXml(currentTabId, obj.ItemID.ToString(""), true, depth, n);
-        //                if (childrenNodes.Count > 0)
-        //                {
-        //                    n.Children = childrenNodes;
-        //                }
-        //            }
-
-        //            nodes.Add(n);
-        //        }
-
-        //    }
-
-        //    return nodes;
-
-        //}
-
     }
 }

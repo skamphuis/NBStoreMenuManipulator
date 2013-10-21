@@ -1,6 +1,5 @@
 <div>
-    <h2>
-        40FINGERS DotNetNuke module NbStoreMenuManipulator</h2>
+    <h2>40FINGERS DotNetNuke module NbStoreMenuManipulator</h2>
     <img width="242" height="268" align="right" src="http://www.40fingers.net/Portals/0/Images/Products/40Fingers-Product-Box.png" alt="" />
     <p>
         Project Page:<br />
@@ -11,21 +10,37 @@
         <a href="http://www.40fingers.net">40Fingers</a>
     </p>
     <p>
-        Stefan Kamphuis 2013-09-15</p>
+        Stefan Kamphuis 2013-10-21
+    </p>
     <div style="clear: both;">
-        &nbsp;</div>
-      <p>To install, edit web.config section configuration/system.web/httpModules to contain the following line BEFORE UrlRewrite:<br />
-      &lt;add name="NbStoreMenuManipulator" type="FortyFingers.NbStoreMenuManipulator.NbStoreMenuManipulatorModule, 40Fingers.DNN.Modules.NbStoreMenuManipulator" /&gt;
-      </p>
-    <h3>
-        Version 01.00.00:</h3>
-    <h4>
-        Functionality header:</h4>
+        &nbsp;
+    </div>
+    <p>
+        To install, edit web.config section configuration/system.web/httpModules to contain the following line BEFORE UrlRewrite:<br />
+        &lt;add name="NbStoreMenuManipulator" type="FortyFingers.NbStoreMenuManipulator.NbStoreMenuManipulatorModule, 40Fingers.DNN.Modules.NbStoreMenuManipulator" /&gt;
+    </p>
+    <h3>Version 01.00.00:</h3>
+    <h4>Initial version:</h4>
+    <p>To install: install as any extension on DNN.</p>
+    <p>
+        To use:
     <ul>
-        <li style="list-style-type: none;">
-            <p>
-                <b>Initial version</b>
-            </p>
-        </li>
+        <li>Add a setting named "FortyFingers.CategoriesTab" to your website. Make sure you choose "Website Page" as the type. Although not required, you might want to add it to the System.Tabs category</li>
+        <li>Make sure your skin uses the DDR Menu skinobject for rendering the menu</li>
+        <li>Add the following attribute to the menu control in the skin:<br />
+            NodeManipulator="FortyFingers.NbStoreMenuManipulator.NbStoreMenuManipulator,40Fingers.DNN.Modules.NbStoreMenuManipulator"</li>
     </ul>
+        This component will replace the tab selected in the setting (which is localizable) by the categories in the store. This way you will only need one productlist page, but can still have all categories in your menu.
+    </p>
+    <p>
+        Also, you can choose to have specific categries displayed on other tabs. To do this:
+  <ul>
+      <li>Create a setting named: manipulatorcatidontabid.text</li>
+      <li>Set the value for the new seeting with semicolon separated references for each categroy that needs to be displayed on another tab:<br />
+          first-categoryId>new-tabId;second-categoryId>other-tabId<br />
+          for example: 3>155;4>162
+    <li>
+      The component will make no changes to the new tab. DNN Controls it's name and wether it's in the menu or not.
+  </ul>
+    </p>
 </div>

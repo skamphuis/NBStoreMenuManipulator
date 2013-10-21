@@ -84,28 +84,13 @@
     <Content Include="_external\NEvoweb.DNN.Modules.NB_Store.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\View.ascx.resx">
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_LocalResources\Edit.ascx.resx">
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="40Fingers.NbStoreMenuManipulator.dnn">
       <SubType>Designer</SubType>
     </None>
     <Content Include="msbuild\build.bat" />
     <None Include="msbuild\Project.targets" />
-    <Content Include="Sql\01.00.00.SqlDataProvider" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\" />
-    <Folder Include="css\" />
-    <Folder Include="img\" />
-    <Folder Include="js\" />
-    <Folder Include="Templates\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
